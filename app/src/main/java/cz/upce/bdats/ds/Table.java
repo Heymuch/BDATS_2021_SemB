@@ -21,7 +21,12 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
 
     @Override
     public V find(K key) throws Exception {
-        throw Error.NOT_IMPL;
+        if (Objects.isNull(key)) throw Error.KEY_IS_NULL;
+        if (isEmpty()) return null;
+
+        Node node = findNode(key, root);
+        if (Objects.isNull(node)) throw Error.NO_KEY_VALUE;
+        return node.value;
     }
 
     @Override
@@ -66,6 +71,61 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
             else
                 parent.right = child;
         }
+    }
+
+    private Node findNode(K key, Node node) {
+        if (key.equals(node.key)) return node;
+
+        int comparison = key.compareTo(node.key);
+        if (comparison <= 0 && Objects.nonNull(node.left))
+            return findNode(key, node.left);
+        else if (comparison > 0 && Objects.nonNull(node.right))
+            return findNode(key, node.right);
+
+        return null;
+    }
+
+    private Node getMinimum(Node root) {
+        if (hasLeftChild(root))
+            return getMinimum(root.left);
+        return root;
+    }
+
+    private Node getMaximum(Node root) {
+        if (hasRightChild(root))
+            return getMaximum(root.right);
+        return root;
+    }
+
+    private Node getParentNode(final Node root, final Node child) {
+        Objects.requireNonNull(root);
+        Objects.requireNonNull(child);
+
+        if (child == root) return null;
+
+        if (root.left == child || root.right == child) return root;
+
+        int comparison = child.key.compareTo(root.key);
+        if (hasLeftChild(root) && comparison <= 0)
+            return getParentNode(root.left, child);
+        else if (hasRightChild(root) && comparison > 0)
+            return getParentNode(root.right, child);
+        else
+
+    }
+
+    private boolean hasChildren(Node node) {
+        return (hasLeftChild(node) || hasRightChild(node));
+    }
+
+    private boolean hasLeftChild(Node node) {
+        Objects.requireNonNull(node);
+        return Objects.nonNull(node.left)
+    }
+
+    private boolean hasRightChild(Node node) {
+        Objects.requireNonNull(node);
+        return Objects.nonNull(node.right);
     }
 
     private class Node {
@@ -154,6 +214,8 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
         private static final Error NOT_IMPL = new Error("Metoda není implementována!");
         private static final Error KEY_IS_NULL = new Error("Klíč má hodnotu null!");
         private static final Error UKNOWN_ITERATOR = new Error("Neznámý typ iterátoru!");
+        private static final Error NO_KEY_VALUE = new Error("Klíč nemá přiřazenou hodnotu!");
+        private static final Error UNKNOWN_NODE = new Error("Ve stromě se daný uzel nenachází!");
 
         // Konstruktor
         public Error(String message, Throwable cause) {

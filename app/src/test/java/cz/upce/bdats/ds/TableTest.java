@@ -49,6 +49,48 @@ public class TableTest {
     }
 
     @Test
+    public void findExistingKeyTest() throws Exception {
+        ITable<String, A> t = new Table<>();
+        t.add(O3.key, O3);
+        t.add(O2.key, O2);
+        t.add(O5.key, O5);
+        t.add(O1.key, O1);
+        t.add(O4.key, O4);
+
+        assertEquals(O1, t.find("A"));
+        assertEquals(O3, t.find("C"));
+        assertEquals(O2, t.find("B"));
+        assertEquals(O5, t.find("E"));
+        assertEquals(O4, t.find("D"));
+    }
+
+    @Test
+    public void findNonExistingKeyTest() throws Exception {
+        try {
+            ITable<String, A> t = new Table<>();
+            t.add(O1.key, O1);
+            t.add(O2.key, O2);
+            t.add(O3.key, O3);
+            t.find(O4.key);
+            fail();
+        } catch (Exception e) {}
+    }
+
+    @Test
+    public void findNullKeyTest() {
+        try {
+            ITable<String, A> t = new Table<>();
+            t.add(O1.key, O1);
+            t.add(O2.key, O2);
+            t.add(O3.key, O3);
+            t.find(null);
+            fail();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void breadthIteratorTest() throws Exception {
         ITable<String, A> t = new Table<>();
         t.add(O3.key, O3);
