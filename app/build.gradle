@@ -33,5 +33,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'cz.upce.bdats.sema.App'
+    mainClass = 'cz.upce.bdats.App'
 }
