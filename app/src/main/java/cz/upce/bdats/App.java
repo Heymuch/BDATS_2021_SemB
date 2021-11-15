@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Stream;
 import java.util.Objects;
 import java.io.File;
 import java.io.FileReader;
@@ -20,14 +19,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
 
 public class App extends Application {
     private static final String TITLE = "Hejduk - Semestrální práce A";

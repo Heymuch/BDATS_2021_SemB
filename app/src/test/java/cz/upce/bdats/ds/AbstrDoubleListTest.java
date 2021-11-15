@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 import java.util.Iterator;
 
 public class AbstrDoubleListTest {
-    private static final Integer INT10 = new Integer(10);
-    private static final Integer INT20 = new Integer(20);
-    private static final Integer INT30 = new Integer(30);
-    private static final Integer INT40 = new Integer(40);
+    private static final Integer INT10 = 10;
+    private static final Integer INT20 = 20;
+    private static final Integer INT30 = 30;
+    private static final Integer INT40 = 40;
 
     @Test
     public void prazdnyTest() {
@@ -21,14 +21,14 @@ public class AbstrDoubleListTest {
     @Test
     public void neniPrazdnyTest() {
         IAbstrDoubleList<Integer> l = new AbstrDoubleList<>();
-        l.vlozPrvni(new Integer(10));
+        l.vlozPrvni(10);
         assertFalse(l.jePrazdny());
     }
 
     @Test
     public void prazdnyPoZruseniTest() {
         IAbstrDoubleList<Integer> l = new AbstrDoubleList<>();
-        l.vlozPrvni(new Integer(10));
+        l.vlozPrvni(10);
         l.zrus();
         assertTrue(l.jePrazdny());
     }

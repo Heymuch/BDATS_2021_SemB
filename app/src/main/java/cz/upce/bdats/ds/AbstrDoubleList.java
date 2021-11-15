@@ -12,11 +12,7 @@ public class AbstrDoubleList<T> implements IAbstrDoubleList<T> {
         Prvek predchozi;
         Prvek nasledujici;
 
-        // Konstruktory
-        Prvek(T data) {
-            this(data, null, null);
-        }
-
+        // Konstruktor
         Prvek(T data, Prvek predchozi, Prvek nasledujici) {
             this.data = data;
             this.predchozi = predchozi;
@@ -24,15 +20,13 @@ public class AbstrDoubleList<T> implements IAbstrDoubleList<T> {
         }
     }
 
-    private class ListIterator implements Iterator {
+    private class ListIterator implements Iterator<T> {
         // Atributy
         private Prvek aktualni;
-        private Prvek posledni;
 
         // Konstruktor
-        private ListIterator(Prvek prvni, Prvek posledni) {
+        private ListIterator(Prvek prvni) {
             this.aktualni = prvni;
-            this.posledni = posledni;
         }
 
         // Metody
@@ -53,7 +47,7 @@ public class AbstrDoubleList<T> implements IAbstrDoubleList<T> {
     public static class ListException extends Exception {
         // Konstanty
         private static final ListException NENI_AKTUALNI = new ListException("Není nastaven aktuální prvek!");
-        private static final ListException NEIMPL = new ListException("Není implementováno!");
+        // private static final ListException NEIMPL = new ListException("Není implementováno!");
         private static final ListException PRAZDNY = new ListException("Seznam je prázdný!");
         private static final ListException KONEC = new ListException("Konec seznamu!");
 
@@ -279,6 +273,6 @@ public class AbstrDoubleList<T> implements IAbstrDoubleList<T> {
 
     @Override // M401
     public Iterator<T> iterator() {
-        return new ListIterator(prvni, posledni);
+        return new ListIterator(prvni);
     }
 }

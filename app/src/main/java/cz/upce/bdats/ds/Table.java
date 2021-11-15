@@ -132,12 +132,6 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
         return root;
     }
 
-    private Node getMaximum(Node root) {
-        if (hasRightChild(root))
-            return getMaximum(root.right);
-        return root;
-    }
-
     private Node getParentNode(final Node root, final Node child) {
         Objects.requireNonNull(root);   // pokud je root uzel null...
         Objects.requireNonNull(child);  // pokud je potomek null...
@@ -153,14 +147,6 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
             return getParentNode(root.right, child);
         else
             return null;
-    }
-
-    private boolean hasChildren(Node node) {
-        return (hasLeftChild(node) && hasRightChild(node));
-    }
-
-    private boolean hasChild(Node node) {
-        return (hasLeftChild(node) || hasRightChild(node));
     }
 
     private boolean hasLeftChild(Node node) {
@@ -256,12 +242,12 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
 
     public static class Error extends Exception {
         // Konstanty
-        private static final Error NOT_IMPL = new Error("Metoda není implementována!");
+        //private static final Error NOT_IMPL = new Error("Metoda není implementována!");
         private static final Error EMPTY = new Error("Tabulka je prázdná!");
         private static final Error KEY_IS_NULL = new Error("Klíč má hodnotu null!");
         private static final Error UKNOWN_ITERATOR = new Error("Neznámý typ iterátoru!");
         private static final Error NO_KEY_VALUE = new Error("Klíč nemá přiřazenou hodnotu!");
-        private static final Error UNKNOWN_NODE = new Error("Ve stromě se daný uzel nenachází!");
+        //private static final Error UNKNOWN_NODE = new Error("Ve stromě se daný uzel nenachází!");
 
         // Konstruktor
         public Error(String message, Throwable cause) {
