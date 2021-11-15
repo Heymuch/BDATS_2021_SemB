@@ -6,13 +6,13 @@ public interface IPobocka extends Iterable {
     String getNazev();
 
     // M101 vloží nové auto do seznamu na příslušnou pozici (první, poslední, předchůdce, následník)
-    void vlozAuto(Auto auto, Pozice pozice) throws Exception;
+    void vlozAuto(Auto auto) throws Exception;
 
     // zpřístupní auto z požadované pozice (první, poslední, předchůdce, následník, aktuální)
-    Auto zpristupniAuto(Pozice pozice) throws Exception;
+    Auto zpristupniAuto(String spz) throws Exception;
 
     // odebere auto z požadované pozice (první, poslední, předchůdce, následník, aktuální)
-    Auto odeberAuto(Pozice pozice) throws Exception;
+    Auto odeberAuto(String spz) throws Exception;
 
     // vytvoří iterátor
     Iterator<Auto> iterator();

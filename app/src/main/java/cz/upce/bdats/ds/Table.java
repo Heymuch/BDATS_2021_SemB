@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     // Atributy
     private Node root;
+    private int counter;
 
     // *** Metody rozhraní ITable ***
     @Override
@@ -17,6 +18,11 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     @Override
     public boolean isEmpty() {
         return Objects.isNull(root);
+    }
+
+    @Override
+    public int size() {
+        return counter;
     }
 
     @Override
@@ -41,6 +47,8 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
             root = node;
         else
             addNode(root, node);
+
+        counter++;
     }
 
     @Override
@@ -51,17 +59,20 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
         Node node = findNode(key, root);                    // vyhledání uzlu
         if (Objects.isNull(node)) throw Error.NO_KEY_VALUE; // pokud neexistuje uzel s daným klíčem
 
+        V value = node.value;
         removeNode(node);
 
-        return node.value;
+        counter--;
+
+        return value;
     }
 
     @Override
-    public Iterator<V> iterator(IterationType type) throws Exception {
+    public Iterator<V> iterator(IterationType type) {
         switch (type) {
-            case BREADTH: return new BreadthIterator(root);
-            case DEPTH: return new DepthIterator(root);
-            default: throw Error.UKNOWN_ITERATOR;
+            case BREADTH: return (!isEmpty()) ? new BreadthIterator(root) : new BreadthIterator();
+            case DEPTH: return (!isEmpty()) ? new DepthIterator(root) : new DepthIterator();
+            default: return null;
         }
     }
 
@@ -95,7 +106,7 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     }
 
     private void removeNodeWithChild(Node node) {
-        Node successor = getMinimum(node.right);
+        Node successor = (Objects.nonNull(node.right)) ? getMinimum(node.right) : getMaximum(node.left);
         removeNode(successor);
         node.value = successor.value;
     }
@@ -129,6 +140,12 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     private Node getMinimum(Node root) {
         if (hasLeftChild(root))
             return getMinimum(root.left);
+        return root;
+    }
+
+    private Node getMaximum(Node root) {
+        if (hasRightChild(root))
+            return getMaximum(root.right);
         return root;
     }
 
@@ -183,6 +200,9 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
         // Atributy
         private final IStack<Node> stack = new Stack<>();
 
+        private DepthIterator() {
+        }
+
         private DepthIterator(Node root) {
             stack.push(root);
         }
@@ -214,6 +234,9 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
         private IQueue<Node> queue = new Queue<>();
 
         // Konstruktor
+        private BreadthIterator() {
+        }
+
         private BreadthIterator(Node root) {
             queue.push(root);
         }

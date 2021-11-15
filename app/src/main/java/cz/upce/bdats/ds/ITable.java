@@ -11,6 +11,9 @@ public interface ITable<K extends Comparable<K>, V> {
     // test prázdnosti tabulky
     boolean isEmpty();
 
+    // velikost tabulky
+    int size();
+
     // vyhledá prvek dle klíče
     V find(K key) throws Exception;
 
@@ -21,5 +24,5 @@ public interface ITable<K extends Comparable<K>, V> {
     V remove(K key) throws Exception;
 
     // vytvoří terátor, který umožní procházení stromu do šířky/hloubky
-    Iterator<V> iterator(IterationType type) throws Exception;
+    Iterator<V> iterator(IterationType type);
 }
