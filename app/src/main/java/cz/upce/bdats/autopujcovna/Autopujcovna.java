@@ -98,35 +98,35 @@ public class Autopujcovna implements IAutopujcovna {
     }
 
     // vloží nové auto do seznamu aktuální pobocky na příslušnou pozici
-    public void vlozAuto(Auto auto, Pozice pozice) throws AutopujcovnaException {
+    public void vlozAuto(Auto auto) throws AutopujcovnaException {
         try {
-            pobocky.zpristupniAktualni().vlozAuto(auto, pozice);
+            pobocky.zpristupniAktualni().vlozAuto(auto);
         } catch (Exception e) {
             throw new AutopujcovnaException("Chyba při vkládání auta do aktuální pobočky!", e);
         }
     }
 
     // zpřístupní auto z požadované pozice aktuální pobočky (první, poslední, předchůdce, následník, aktuální)
-    public Auto zpristupniAuto(Pozice pozice) throws AutopujcovnaException {
+    public Auto zpristupniAuto(String spz) throws AutopujcovnaException {
         try {
-            return pobocky.zpristupniAktualni().zpristupniAuto(pozice);
+            return pobocky.zpristupniAktualni().zpristupniAuto(spz);
         } catch (Exception e) {
             throw new AutopujcovnaException("Chyba při zpřístupňování auta v aktuální pobočce!", e);
         }
     }
 
     // odebere auto z požadované pozice (první, poslední, předchůdce, následník, aktuální)
-    public Auto odeberAuto(Pozice pozice) throws AutopujcovnaException {
+    public Auto odeberAuto(String spz) throws AutopujcovnaException {
         try {
-            return pobocky.zpristupniAktualni().odeberAuto(pozice);
+            return pobocky.zpristupniAktualni().odeberAuto(spz);
         } catch (Exception e) {
             throw new AutopujcovnaException("Chyba při odebírání auta z aktualní pobočky!", e);
         }
     }
     // odebere auto z požadované pozice aktuální pobočky a vloží ho do seznamu výpůjček (první, poslední, následník, předchůdce, aktuální)
-    public Auto vypujcAuto(Pozice pozice) throws AutopujcovnaException {
+    public Auto vypujcAuto(String spz) throws AutopujcovnaException {
         try {
-            Auto a = pobocky.zpristupniAktualni().odeberAuto(pozice);
+            Auto a = pobocky.zpristupniAktualni().odeberAuto(spz);
             a.setPocetVypujceni(a.getPocetVypujceni() + 1);
             vypujcene.vlozPosledni(a);
             return a;
@@ -152,7 +152,7 @@ public class Autopujcovna implements IAutopujcovna {
                 default: throw AutopujcovnaException.POZICE;
             }
 
-            pobocky.zpristupniAktualni().vlozAuto(a, Pozice.POSLEDNI);
+            pobocky.zpristupniAktualni().vlozAuto(a);
             return a;
         } catch (Exception e) {
             throw new AutopujcovnaException("Chyba při vracení auta na pobočku!", e);

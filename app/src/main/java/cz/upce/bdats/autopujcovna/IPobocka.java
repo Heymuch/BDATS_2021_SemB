@@ -2,7 +2,7 @@ package cz.upce.bdats.autopujcovna;
 
 import java.util.Iterator;
 
-public interface IPobocka extends Iterable {
+public interface IPobocka extends Iterable<Auto> {
     String getNazev();
 
     // M101 vloží nové auto do seznamu na příslušnou pozici (první, poslední, předchůdce, následník)
