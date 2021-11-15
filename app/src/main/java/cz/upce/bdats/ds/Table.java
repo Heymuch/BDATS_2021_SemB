@@ -8,7 +8,7 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     // Atributy
     private Node root;
 
-    // Metody
+    // *** Metody rozhraní ITable ***
     @Override
     public void clear() {
         root = null;
@@ -21,22 +21,23 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
 
     @Override
     public V find(K key) throws Exception {
-        if (Objects.isNull(key)) throw Error.KEY_IS_NULL;
-        if (isEmpty()) return null;
+        checkKey(key);                      // pokud je klíč null...
+        if (isEmpty()) throw Error.EMPTY;   // pokud je tabulka prázná ...
 
-        Node node = findNode(key, root);
-        if (Objects.isNull(node)) throw Error.NO_KEY_VALUE;
-        return node.value;
+        Node node = findNode(key, root); // vyhledání uzlu podle klíče
+
+        if (Objects.isNull(node)) throw Error.NO_KEY_VALUE; // pokud neexistuje hodnota pro daný klíč ...
+
+        return node.value; // vrácení hodnoty uzlu
     }
 
     @Override
     public void add(K key, V value) throws Exception {
-        // Kontrola parametru
-        if (Objects.isNull(key)) throw Error.KEY_IS_NULL;
+        checkKey(key); // pokud je klíč null ...
 
-        Node node = new Node(key, value);
+        Node node = new Node(key, value); // vytvoření nového uzlu
 
-        if (Objects.isNull(root))
+        if (this.isEmpty())
             root = node;
         else
             addNode(root, node);
@@ -44,7 +45,15 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
 
     @Override
     public V remove(K key) throws Exception {
-        throw Error.NOT_IMPL;
+        checkKey(key);                      // pokud je klíč null...
+        if (isEmpty()) throw Error.EMPTY;   // pokud je tabulka prázdná...
+
+        Node node = findNode(key, root);                    // vyhledání uzlu
+        if (Objects.isNull(node)) throw Error.NO_KEY_VALUE; // pokud neexistuje uzel s daným klíčem
+
+        removeNode(node);
+
+        return node.value;
     }
 
     @Override
@@ -57,29 +66,61 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     }
 
     // Pomocné metody
+    private void checkKey(K key) throws Exception {
+        if (Objects.isNull(key))
+            throw Error.KEY_IS_NULL;
+    }
+
     private void addNode(Node parent, Node child) {
         int comparison = child.key.compareTo(parent.key); // hodnota porovnání
 
         if (comparison <= 0) { // pokud je klíč menší nebo roven
-            if (Objects.nonNull(parent.left))
+            if (hasLeftChild(parent))
                 addNode(parent.left, child);
             else
                 parent.left = child;
         } else { // pokud je klíč větší
-            if (Objects.nonNull(parent.right))
+            if (hasRightChild(parent))
                 addNode(parent.right, child);
             else
                 parent.right = child;
         }
     }
 
+    private void removeNode(Node node) {
+        if (hasLeftChild(node) || hasRightChild(node)) // pokud má uzel potomky...
+            removeNodeWithChild(node);
+        else
+            removeLeaf(node);
+    }
+
+    private void removeNodeWithChild(Node node) {
+        Node successor = getMinimum(node.right);
+        removeNode(successor);
+        node.value = successor.value;
+    }
+
+    private void removeLeaf(Node node) {
+        if (node == root) { // pokud je uzel zároveň root uzel...
+            clear();
+            return;
+        }
+
+        Node parent = getParentNode(root, node);    // nalezení rodičovského uzlu
+
+        if (parent.left == node)   // pokud je potomek levým uzlem...
+            parent.left = null;
+        else                        // pokud je potomek pravým uzlem...
+            parent.right = null;
+    }
+
     private Node findNode(K key, Node node) {
         if (key.equals(node.key)) return node;
 
         int comparison = key.compareTo(node.key);
-        if (comparison <= 0 && Objects.nonNull(node.left))
+        if (comparison <= 0 && hasLeftChild(node))
             return findNode(key, node.left);
-        else if (comparison > 0 && Objects.nonNull(node.right))
+        else if (comparison > 0 && hasRightChild(node))
             return findNode(key, node.right);
 
         return null;
@@ -98,10 +139,10 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     }
 
     private Node getParentNode(final Node root, final Node child) {
-        Objects.requireNonNull(root);
-        Objects.requireNonNull(child);
+        Objects.requireNonNull(root);   // pokud je root uzel null...
+        Objects.requireNonNull(child);  // pokud je potomek null...
 
-        if (child == root) return null;
+        if (child == root) return null; // pokud uzel roven kořenu
 
         if (root.left == child || root.right == child) return root;
 
@@ -111,16 +152,20 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
         else if (hasRightChild(root) && comparison > 0)
             return getParentNode(root.right, child);
         else
-
+            return null;
     }
 
     private boolean hasChildren(Node node) {
+        return (hasLeftChild(node) && hasRightChild(node));
+    }
+
+    private boolean hasChild(Node node) {
         return (hasLeftChild(node) || hasRightChild(node));
     }
 
     private boolean hasLeftChild(Node node) {
         Objects.requireNonNull(node);
-        return Objects.nonNull(node.left)
+        return Objects.nonNull(node.left);
     }
 
     private boolean hasRightChild(Node node) {
@@ -150,7 +195,7 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
 
     private class DepthIterator implements Iterator<V> {
         // Atributy
-        IStack<Node> stack = new Stack<>();
+        private final IStack<Node> stack = new Stack<>();
 
         private DepthIterator(Node root) {
             stack.push(root);
@@ -212,6 +257,7 @@ public class Table<K extends Comparable<K>, V> implements ITable<K, V> {
     public static class Error extends Exception {
         // Konstanty
         private static final Error NOT_IMPL = new Error("Metoda není implementována!");
+        private static final Error EMPTY = new Error("Tabulka je prázdná!");
         private static final Error KEY_IS_NULL = new Error("Klíč má hodnotu null!");
         private static final Error UKNOWN_ITERATOR = new Error("Neznámý typ iterátoru!");
         private static final Error NO_KEY_VALUE = new Error("Klíč nemá přiřazenou hodnotu!");

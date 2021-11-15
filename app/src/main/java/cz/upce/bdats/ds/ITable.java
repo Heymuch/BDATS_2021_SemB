@@ -3,7 +3,9 @@ package cz.upce.bdats.ds;
 import java.util.Iterator;
 
 public interface ITable<K extends Comparable<K>, V> {
-    // zrišení celé tabulky
+    /**
+     * Zrušení celé tabulky
+     */
     void clear();
 
     // test prázdnosti tabulky

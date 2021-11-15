@@ -91,6 +91,17 @@ public class TableTest {
     }
 
     @Test
+    public void findInEmptyTableTest() {
+        try {
+            ITable<String, A> t = new Table<>();
+            t.find(O1.key);
+            fail();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void breadthIteratorTest() throws Exception {
         ITable<String, A> t = new Table<>();
         t.add(O3.key, O3);
