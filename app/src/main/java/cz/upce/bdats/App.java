@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 // Autopujcovna
 import cz.upce.bdats.autopujcovna.*;
 import cz.upce.bdats.data.*;
-
+import cz.upce.bdats.gui.GUI;
 // JavaFX
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -26,7 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 
-public class App extends Application {
+public class App {
     private static final String TITLE = "Hejduk - Semestrální práce A";
     private static final double WIDTH = 1200;
     private static final double HEIGHT = 700;
@@ -77,78 +77,8 @@ public class App extends Application {
     private HBox hb5 = new HBox();
     private BorderPane root = new BorderPane();
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void init() throws Exception {
-        autopujcovna = Generator.genAutopujcovna(0, 0, 0);
-        handleShowAutopujcovna();
-
-        btnLoad.setOnAction(e -> {
-            handleLoadAutopujcovna();
-            handleShowPobocky();
-        });
-        btnSave.setOnAction(e -> handleSaveAutopujcovna());
-        btnPobockyFirst.setOnAction(e -> handlePobockaFirst());
-        btnPobockyLast.setOnAction(e -> handlePobockaLast());
-        btnPobockyNext.setOnAction(e -> handlePobockaNext());
-        btnPobockyPrev.setOnAction(e -> handlePobockaPrev());
-        btnPobockyOdeber.setOnAction(e -> handlePobockaOdeber());
-        btnPobockyNovy.setOnAction(e -> handlePobockaNova());
-        btnPobockyZrus.setOnAction(e -> handlePobockyZrus());
-
-        btnAutaFirst1.setOnAction(e -> handleAutoFirst());
-        btnAutaLast1.setOnAction(e -> handleAutoLast());
-        btnAutaNext1.setOnAction(e -> handleAutoNext());
-        btnAutaPrev1.setOnAction(e -> handleAutoPrev());
-        btnAutaOdeber.setOnAction(e -> handleAutoOdeber());
-        btnAutaNovy.setOnAction(e -> handleAutoNove());
-        btnAutaZrus.setOnAction(e -> handleAutaZrus());
-
-        btnAutaFirst2.setOnAction(e -> handleAutoVypujceneFirst());
-        btnAutaLast2.setOnAction(e -> handleAutoVypujceneLast());
-        btnAutaNext2.setOnAction(e -> handleAutoVypujceneNext());
-        btnAutaPrev2.setOnAction(e -> handleAutoVypujcenePrev());
-        btnAutaVrat.setOnAction(e -> handleVratAuto());
-        btnAutaVypujci.setOnAction(e -> handleVypujciAuto());
-
-        //HBox.setHgrow(lvPobocky, Priority.ALWAYS);
-        //HBox.setHgrow(lvAutaPobocky, Priority.ALWAYS);
-        //HBox.setHgrow(lvAutaVypujcene, Priority.ALWAYS);
-        VBox.setVgrow(hb3, Priority.ALWAYS);
-        VBox.setVgrow(hb4, Priority.ALWAYS);
-        VBox.setVgrow(hb5, Priority.ALWAYS);
-
-        // hb1.setSpacing(10);
-        // hb1.getChildren().addAll(lvPobocky, lvAutaPobocky, lvAutaVypujcene);
-
-        hb2.setSpacing(10);
-        hb2.getChildren().addAll(btnLoad, btnSave);
-
-        hb3.getChildren().addAll(btnPobockyNovy, btnPobockyOdeber, btnPobockyZrus, btnPobockyFirst, btnPobockyLast, btnPobockyPrev, btnPobockyNext);
-        hb4.getChildren().addAll(btnAutaNovy, btnAutaOdeber, btnAutaZrus, btnAutaFirst1, btnAutaLast1, btnAutaPrev1, btnAutaNext1);
-        hb5.getChildren().addAll(btnAutaVypujci, btnAutaVrat, btnAutaFirst2, btnAutaLast2, btnAutaPrev2, btnAutaNext2);
-
-        vb1.getChildren().addAll(lvPobocky, hb3);
-        vb2.getChildren().addAll(lvAutaPobocky, hb4);
-        vb3.getChildren().addAll(lvAutaVypujcene, hb5);
-
-        root.setTop(lbTitle);
-        root.setBottom(hb2);
-        root.setLeft(vb1);
-        root.setCenter(vb2);
-        root.setRight(vb3);
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
-
-        stage.setTitle(TITLE);
-        stage.setScene(scene);
-        stage.show();
+    public static void main(String[] args) throws Exception {
+        Application.launch(GUI.class, args);
     }
 
     private void handleShowAutopujcovna() {
@@ -234,7 +164,7 @@ public class App extends Application {
 
     private void handleAutoFirst() {
         try {
-            Auto auto = autopujcovna.zpristupniAuto(Pozice.PRVNI);
+            Auto auto = autopujcovna.zpristupniAuto("");
             lvAutaPobocky.getSelectionModel().select(auto);
         } catch (Exception e) {
             Logger.getGlobal().throwing("App", "handleAutoFirst", e);
@@ -262,7 +192,7 @@ public class App extends Application {
 
     private void handleAutoLast() {
         try {
-            Auto auto = autopujcovna.zpristupniAuto(Pozice.POSLEDNI);
+            Auto auto = autopujcovna.zpristupniAuto("");
             lvAutaPobocky.getSelectionModel().select(auto);
         } catch (Exception e) {
             Logger.getGlobal().throwing("App", "handleAutoLast", e);
@@ -290,7 +220,7 @@ public class App extends Application {
 
     private void handleAutoNext() {
         try {
-            Auto auto = autopujcovna.zpristupniAuto(Pozice.NASLEDNIK);
+            Auto auto = autopujcovna.zpristupniAuto("");
             lvAutaPobocky.getSelectionModel().select(auto);
         } catch (Exception e) {
             Logger.getGlobal().throwing("App", "handleAutoNext", e);
@@ -318,7 +248,7 @@ public class App extends Application {
 
     private void handleAutoPrev() {
         try {
-            Auto auto = autopujcovna.zpristupniAuto(Pozice.PREDCHUDCE);
+            Auto auto = autopujcovna.zpristupniAuto("");
             lvAutaPobocky.getSelectionModel().select(auto);
         } catch (Exception e) {
             Logger.getGlobal().throwing("App", "handleAutoPrev", e);
@@ -346,7 +276,7 @@ public class App extends Application {
 
     private void handleAutoOdeber() {
         try {
-            autopujcovna.odeberAuto(Pozice.AKTUALNI);
+            autopujcovna.odeberAuto("");
             handleShowAuta();
         } catch (Exception e) {
             Logger.getGlobal().throwing("App", "handleAutoOdeber", e);
@@ -384,7 +314,7 @@ public class App extends Application {
 
     private void handleAutoNove() {
         try {
-            autopujcovna.vlozAuto(Generator.genAuto(), Pozice.POSLEDNI);
+            autopujcovna.vlozAuto(Generator.genAuto());
             handleShowAuta();
         } catch (Exception e) {
             Logger.getGlobal().throwing("App", "handleAutoNove", e);
@@ -393,7 +323,7 @@ public class App extends Application {
 
     private void handleVypujciAuto() {
         try {
-            autopujcovna.vypujcAuto(Pozice.AKTUALNI);
+            autopujcovna.vypujcAuto("");
             handleShowAuta();
             handleShowVypujcenaAuta();
         } catch (Exception e) {

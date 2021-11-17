@@ -90,7 +90,7 @@ public class Persistence {
 
             IPobocka p = new Pobocka(nazev);
             for (int i = 1; i <= pocetAut; i++)
-                p.vlozAuto(Persistence.Automobily.fromCSV(csv[i]), Pozice.POSLEDNI);
+                p.vlozAuto(Persistence.Automobily.fromCSV(csv[i]));
             return p;
         }
     }

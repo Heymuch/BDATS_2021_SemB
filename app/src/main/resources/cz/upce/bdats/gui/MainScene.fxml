@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="473.0" prefWidth="1221.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.upce.bdats.gui.MainSceneController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Autopůjčovna">
+            <items>
+                  <MenuItem disable="true" mnemonicParsing="false" onAction="#newAutopujcovna" text="Nová" />
+                  <MenuItem mnemonicParsing="false" onAction="#generateAutopujcovna" text="Generuj" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <Menu mnemonicParsing="false" text="Uložit">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#saveToCSV" text="do CSV" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveToBin" text="do BIN" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Načíst">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#loadFromCSV" text="z CSV" />
+                        <MenuItem mnemonicParsing="false" onAction="#loadFromBIN" text="z BIN" />
+                    </items>
+                  </Menu>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Pobočka">
+              <items>
+                <MenuItem disable="true" mnemonicParsing="false" onAction="#newPobocka" text="Nová" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#generatePobockaPrvni" text="Generuj první" />
+                  <MenuItem mnemonicParsing="false" onAction="#generatePobockaPosledni" text="Generuj poslední" />
+                  <MenuItem mnemonicParsing="false" onAction="#generatePobockaPredchozi" text="Generuj předchozí" />
+                  <MenuItem mnemonicParsing="false" onAction="#generatePobockaNasledujici" text="Generuj následující" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#removePobockaAktualni" text="Odeber aktuální" />
+                  <MenuItem mnemonicParsing="false" onAction="#removePobockaPrvni" text="Odeber první" />
+                  <MenuItem mnemonicParsing="false" onAction="#removePobockaPosledni" text="Odeber poslední" />
+                  <MenuItem mnemonicParsing="false" onAction="#removePobockaPredchozi" text="Odeber předchozí" />
+                  <MenuItem mnemonicParsing="false" onAction="#removePobockaNasledujici" text="Odeber následující" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Automobil">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#newAutomobil" text="Nový" />
+                  <MenuItem mnemonicParsing="false" onAction="#generateAutomobil" text="Generuj" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label fx:id="gNazevAutopujcovny" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </top>
+         <center>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="420.0" prefWidth="174.0" HBox.hgrow="NEVER">
+                     <children>
+                        <Label text="Pobočky">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="gPobocky" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <GridPane alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#moveToFirstPobocka" text="&lt;&lt;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <tooltip>
+                                    <Tooltip text="První pobočka" />
+                                 </tooltip></Button>
+                              <Button mnemonicParsing="false" onAction="#moveToPrevPobocka" text="&lt;" GridPane.columnIndex="1">
+                                 <tooltip>
+                                    <Tooltip text="Předchozí pobočka" />
+                                 </tooltip></Button>
+                              <Button mnemonicParsing="false" onAction="#moveToNextPobocka" text="&gt;" GridPane.columnIndex="2">
+                                 <tooltip>
+                                    <Tooltip text="Následující pobočka" />
+                                 </tooltip></Button>
+                              <Button mnemonicParsing="false" onAction="#moveToLastPobocka" text="&gt;&gt;" GridPane.columnIndex="3">
+                                 <tooltip>
+                                    <Tooltip text="Poslední pobočka" />
+                                 </tooltip></Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Automobily">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="gAutomobily" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <GridPane alignment="CENTER">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#selectAutomobil" text="Vybrat" />
+                              <Button mnemonicParsing="false" onAction="#borrowAutomobil" text="Vypůjčit" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#removeAutomobil" text="Odebrat" GridPane.columnIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#returnAutomobil" text="Vrátit" GridPane.columnIndex="2" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Vyjčené automobily">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="gVypujcene" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#moveToFirstVypujcene" text="&lt;&lt;" />
+                              <Button mnemonicParsing="false" onAction="#moveToPrevVypujcene" text="&lt;" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#moveToNextVypujcene" text="&gt;" GridPane.columnIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#moveToLastVypujcene" text="&gt;&gt;" GridPane.columnIndex="3" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
+   </center>
+</BorderPane>

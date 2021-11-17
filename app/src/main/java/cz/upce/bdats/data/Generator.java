@@ -52,7 +52,7 @@ public class Generator {
     public static IPobocka genPobocka(int pocetAut) throws Exception {
         IPobocka p = new Pobocka(genPobockaNazev());
         for (int i = 0; i < pocetAut; i++)
-            p.vlozAuto(genAuto(), Pozice.POSLEDNI);
+            p.vlozAuto(genAuto());
         return p;
     }
 
