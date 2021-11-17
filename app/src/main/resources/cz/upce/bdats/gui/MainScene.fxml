@@ -9,10 +9,7 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -84,35 +81,27 @@
                            </font>
                         </Label>
                         <ListView fx:id="gPobocky" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <GridPane alignment="CENTER">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="174.0" spacing="5.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#moveToFirstPobocka" text="&lt;&lt;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                              <Button mnemonicParsing="false" onAction="#moveToFirstPobocka" text="&lt;&lt;">
                                  <tooltip>
                                     <Tooltip text="První pobočka" />
                                  </tooltip></Button>
-                              <Button mnemonicParsing="false" onAction="#moveToPrevPobocka" text="&lt;" GridPane.columnIndex="1">
+                              <Button mnemonicParsing="false" onAction="#moveToPrevPobocka" text="&lt;">
                                  <tooltip>
                                     <Tooltip text="Předchozí pobočka" />
                                  </tooltip></Button>
-                              <Button mnemonicParsing="false" onAction="#moveToNextPobocka" text="&gt;" GridPane.columnIndex="2">
+                              <Button mnemonicParsing="false" onAction="#moveToNextPobocka" text="&gt;">
                                  <tooltip>
                                     <Tooltip text="Následující pobočka" />
                                  </tooltip></Button>
-                              <Button mnemonicParsing="false" onAction="#moveToLastPobocka" text="&gt;&gt;" GridPane.columnIndex="3">
+                              <Button mnemonicParsing="false" onAction="#moveToLastPobocka" text="&gt;&gt;">
                                  <tooltip>
                                     <Tooltip text="Poslední pobočka" />
-                                 </tooltip></Button>
+                                 </tooltip>
+                              </Button>
                            </children>
-                        </GridPane>
+                        </HBox>
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -123,23 +112,15 @@
                            </font>
                         </Label>
                         <ListView fx:id="gAutomobily" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <GridPane alignment="CENTER">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="532.0" spacing="5.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#selectAutomobil" text="Vybrat" />
-                              <Button mnemonicParsing="false" onAction="#borrowAutomobil" text="Vypůjčit" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#removeAutomobil" text="Odebrat" GridPane.columnIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#returnAutomobil" text="Vrátit" GridPane.columnIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#selectAutomobil" text="Hledat" />
+                              <Button mnemonicParsing="false" onAction="#selectAutomobilAll" text="Hledat vše" />
+                              <Button mnemonicParsing="false" onAction="#borrowAutomobil" text="Vypůjčit" />
+                              <Button mnemonicParsing="false" onAction="#removeAutomobil" text="Odebrat" />
+                              <Button mnemonicParsing="false" onAction="#returnAutomobil" text="Vrátit" />
                            </children>
-                        </GridPane>
+                        </HBox>
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -150,23 +131,14 @@
                            </font>
                         </Label>
                         <ListView fx:id="gVypujcene" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="523.0" spacing="5.0" VBox.vgrow="NEVER">
                            <children>
                               <Button mnemonicParsing="false" onAction="#moveToFirstVypujcene" text="&lt;&lt;" />
-                              <Button mnemonicParsing="false" onAction="#moveToPrevVypujcene" text="&lt;" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" onAction="#moveToNextVypujcene" text="&gt;" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" onAction="#moveToLastVypujcene" text="&gt;&gt;" GridPane.columnIndex="3" />
+                              <Button mnemonicParsing="false" onAction="#moveToPrevVypujcene" text="&lt;" />
+                              <Button mnemonicParsing="false" onAction="#moveToNextVypujcene" text="&gt;" />
+                              <Button mnemonicParsing="false" onAction="#moveToLastVypujcene" text="&gt;&gt;" />
                            </children>
-                        </GridPane>
+                        </HBox>
                      </children>
                   </VBox>
                </children>
