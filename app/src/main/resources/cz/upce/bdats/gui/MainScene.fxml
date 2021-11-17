@@ -57,7 +57,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Automobil">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#newAutomobil" text="Nový" />
+                <MenuItem disable="true" mnemonicParsing="false" onAction="#newAutomobil" text="Nový" />
                   <MenuItem mnemonicParsing="false" onAction="#generateAutomobil" text="Generuj" />
               </items>
             </Menu>
